@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // call的实现原理
+    Function.prototype.myCall = function (content) {
+      var content = content || window;
+      content.fn = this;
+      var arg = [...arguments].slice(1);
+      var result = content.fn(...arg);
+      delete content.fn;
+      return result;
+    }
+    // es5原型链实现继承
+    function Animal(name, type) {
+      this.name = name;
+      this.belongTo = type;
+    }
+    Animal.prototype.eat = function () {
+      console.log(this.name, 'this.name');
+    }
+    function Cat(name, type) {
+      this.miaoW = 'miaoW';
+      // Animal.call( this, name, type );
+      Animal.myCall( this, name, type );
+    }
+    Cat.prototype = Animal.prototype;
+    var cat = new Cat('猫', '猫科');
+    console.log(cat);
+    cat.eat();
+
+    // es6实现继承
+    class Teacher {
+      constructor( knowledge ) {
+        this.knowledge = knowledge;
+      }
+      skill() {
+        console.log(`我教同学们${this.knowledge}`);
+      }
+    }
+    class Student extends Teacher {
+      constructor(knowledge, name, age) {
+        super(knowledge);
+        this.name = name;
+        this.age = age;
+      }
+      study() {
+        console.log(`我是${this.name},我要努力学习然后当老师`);
+      }
+
+    }
+
+    var xiaoHong = new Student('数学', '小红', 18);
+    // console.log( xiaoHong );
+    // xiaoHong.study();
+    // xiaoHong.skill();
+
+
+  </script>
+</body>
+
+</html>

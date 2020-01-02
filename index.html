@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() { }
+    var person = new Person();
+    person.name = 'Kevin';
+    console.log(person.name) // Kevin
+
+    // 每个函数都有一个 prototype 属性
+    Person.prototype.name = 'Kevin';
+    var person1 = new Person();
+    var person2 = new Person();
+    console.log(person1.name, 'person1.name') // Kevin
+    console.log(person2.name, 'person2.name') // Kevin
+
+    // 每一个JavaScript对象都具有的一个属性，叫__proto__，这个属性会指向该对象的原型
+    console.log(person.__proto__ === Person.prototype); // true
+
+    // 每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数
+    console.log(Person.prototype, 'Person.prototype');
+    console.log(Person === Person.prototype.constructor); // true
+
+    //当获取对象的属性或者调用对象的方法时，首先会在自己对象中找，当找不到时，会去对象的原型上找
+    Person.prototype.age = 13;
+    Person.prototype.sayHello = function () {
+      console.log('sayHello');
+    }
+    console.log(person.name, 'person.name');
+    console.log(person.age, 'person.age');
+    console.log(person.sayHello(), 'person.sayHello()');
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>
